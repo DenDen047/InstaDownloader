@@ -32,7 +32,7 @@ def main():
     bot.login(username=username, password=password)
 
     # get like medias from your timeline feed
-    url = 'https://www.instagram.com/p/Bxh9WTfhdHt/'
+    url = 'https://www.instagram.com/p/Bo6cvwjHJuF/'
     media_id = bot.get_media_id_from_link(url)
 
     # 画像をダウンロード
