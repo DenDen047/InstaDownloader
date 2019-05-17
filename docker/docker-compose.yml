@@ -14,7 +14,7 @@ services:
         source: ../log
         target: /log
       - type: bind
-        source: ../data
+        source: /Users/ikuta/Downloads/Picture
         target: /data
       - type: bind
         source: ../configs
