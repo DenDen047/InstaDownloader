@@ -3,4 +3,4 @@
 
 ## 開発ログ
 
-yyyy-mm-dd: hogehoge
+2019-05-17: Download images from url list
