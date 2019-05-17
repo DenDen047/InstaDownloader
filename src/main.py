@@ -32,6 +32,7 @@ def main():
     bot.login(username=username, password=password)
 
     # 画像をダウンロード
+    media_id = 123
     dummy_file = os.path.join(DATA_DIR, str(media_id))
     bot.download_photo(
         media_id,
