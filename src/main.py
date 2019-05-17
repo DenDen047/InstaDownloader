@@ -24,24 +24,27 @@ def main():
         username = data['username']
         password = data['password']
 
+    # URLリストをロード
+    urls_file = os.path.join(DATA_DIR, '_urls.txt')
+    url_list = []
+    with open(urls_file, 'r') as f:
+        for i in f:
+            url_list.append(i.rstrip('\n'))
+
     # Login
-    bot = Bot(
-        base_path=LOG_DIR,
-        comments_file=os.path.join(CONFIG_DIR, 'comments.txt')
-    )
+    bot = Bot(base_path=LOG_DIR)
     bot.login(username=username, password=password)
 
-    # get like medias from your timeline feed
-    url = 'https://www.instagram.com/p/Bo6cvwjHJuF/'
-    media_id = bot.get_media_id_from_link(url)
-
     # 画像をダウンロード
-    print(media_id)
-    dummy_file = os.path.join(DATA_DIR, str(media_id))
-    bot.download_photo(
-        media_id,
-        filename=dummy_file
-    )
+    for url in url_list:
+        # get like medias from your timeline feed
+        media_id = bot.get_media_id_from_link(url)
+        # download
+        dummy_file = os.path.join(DATA_DIR, str(media_id))
+        bot.download_photo(
+            media_id,
+            filename=dummy_file
+        )
 
 if __name__ == '__main__':
     main()
