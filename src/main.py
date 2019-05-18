@@ -9,7 +9,8 @@ import time
 from instabot import Bot
 
 
-DATA_DIR = "/data"
+PHOTO_DIR = "/photos"
+VIDEO_DIR = "/videos"
 LOG_DIR = "/log"
 CONFIG_DIR = "/configs"
 
@@ -25,7 +26,7 @@ def main():
         password = data['password']
 
     # URLリストをロード
-    urls_file = os.path.join(DATA_DIR, '_urls.txt')
+    urls_file = os.path.join(PHOTO_DIR, '_urls.txt')
     url_list = []
     with open(urls_file, 'r') as f:
         for i in f:
@@ -39,12 +40,22 @@ def main():
     for url in url_list:
         # get like medias from your timeline feed
         media_id = bot.get_media_id_from_link(url)
+        # get media info
+        info = bot.get_media_info(media_id)[0]
         # download
-        dummy_file = os.path.join(DATA_DIR, str(media_id))
-        bot.download_photo(
-            media_id,
-            filename=dummy_file
-        )
+        dummy_file = str(media_id)
+        if info['media_type'] == 1:     # photo
+            bot.download_photo(
+                media_id,
+                filename=dummy_file,
+                folder=PHOTO_DIR
+            )
+        elif info['media_type'] == 2:   # video
+            bot.download_video(
+                media_id,
+                filename=dummy_file,
+                folder=VIDEO_DIR
+            )
 
 if __name__ == '__main__':
     main()
