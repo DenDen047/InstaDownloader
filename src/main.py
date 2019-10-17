@@ -5,12 +5,14 @@ import glob
 import json
 import random
 import time
+import datetime
 
 from instabot import Bot
 
 
-PHOTO_DIR = "/photos"
-VIDEO_DIR = "/videos"
+ROOT_DATA_DIR = "/root_data"
+PHOTO_DIR = "/root_data/photos/{}".format(datetime.date.today().strftime("%Y-%m-%d"))
+VIDEO_DIR = "/root_data/videos/{}".format(datetime.date.today().strftime("%Y-%m-%d"))
 LOG_DIR = "/log"
 CONFIG_DIR = "/configs"
 
@@ -25,8 +27,14 @@ def main():
         username = data['username']
         password = data['password']
 
+    # create directories
+    dirs = [PHOTO_DIR, VIDEO_DIR]
+    for d in dirs:
+        if not os.path.exists(d):
+            os.makedirs(d)
+
     # URLリストをロード
-    urls_file = os.path.join(PHOTO_DIR, '_urls.txt')
+    urls_file = os.path.join(ROOT_DATA_DIR, '_urls.txt')
     url_list = []
     with open(urls_file, 'r') as f:
         for i in f:
@@ -56,6 +64,12 @@ def main():
                 filename=dummy_file,
                 folder=VIDEO_DIR
             )
+
+    # delete directories which have no data
+    dirs = [PHOTO_DIR, VIDEO_DIR]
+    for d in dirs:
+        if not os.listdir(d):
+            os.rmdir(d)
 
 if __name__ == '__main__':
     main()
