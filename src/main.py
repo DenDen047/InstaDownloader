@@ -44,10 +44,13 @@ def main():
     bot = Bot(base_path=LOG_DIR)
     bot.login(username=username, password=password)
 
-    # 画像をダウンロード
+    # download files
     for url in url_list:
         # get like medias from your timeline feed
-        media_id = bot.get_media_id_from_link(url)
+        try:
+            media_id = bot.get_media_id_from_link(url)
+        except:
+            continue
         # get media info
         info = bot.get_media_info(media_id)[0]
         # download
