@@ -14,8 +14,8 @@ services:
         source: ../log
         target: /log
       - type: bind
-        source: /Users/ikuta/Downloads/Picture
-        target: /data
+        source: /Users/ikuta/Downloads/Instagram
+        target: /root_data
       - type: bind
         source: ../configs
         target: /configs
